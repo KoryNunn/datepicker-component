@@ -65,7 +65,8 @@ defaultCss('datepicker-component', `
 
 module.exports = function(fastn, component, type, settings, children){
     settings.value = settings.value;
-
+    // parseDate(settings.value);
+    // console.log('value',settings.value());
     component.extend('_generic', settings, children);
     component.setProperty('date');
 
@@ -162,6 +163,14 @@ module.exports = function(fastn, component, type, settings, children){
         }
 
         component.date.on('update', update);
+
+        component.on('render',function(){
+          let date = settings.value() &&  new Date(settings.value());
+          var noDate = !date || isNaN(date);
+
+          component.textInput.value(noDate ? '' : date.toDateString());
+          component.datePicker.value(noDate ? undefined : date);
+        })
 
         component.emit('render');
 
