@@ -65,8 +65,6 @@ defaultCss('datepicker-component', `
 
 module.exports = function(fastn, component, type, settings, children){
     settings.value = settings.value;
-    // parseDate(settings.value);
-    // console.log('value',settings.value());
     component.extend('_generic', settings, children);
     component.setProperty('date');
 
