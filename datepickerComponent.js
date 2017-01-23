@@ -149,15 +149,19 @@ module.exports = function(fastn, component, type, settings, children){
             component.date(parseDate(value));
         });
 
-        component.date.on('change', function(date){
+        function update(date){
             date = date && new Date(date);
             var noDate = !date || isNaN(date);
 
             component.textInput.value(noDate ? '' : date.toDateString());
             component.datePicker.value(noDate ? undefined : date);
-        });
+        }
+
+        component.date.on('change', update);
 
         component.emit('render');
+
+        update(settings.date);
 
         return component;
     };
