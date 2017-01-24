@@ -10,14 +10,12 @@ defaultCss('datepicker-component', `
         flex-flow: row wrap;
         height: 32px;
     }
-
     .datepicker-component input{
         height: 32px;
         width: 100%;
         flex: 1;
         padding: 5px;
     }
-
     .datepicker-component .picker{
         flex: 0 1 32px;
         height: 32px;
@@ -35,7 +33,6 @@ defaultCss('datepicker-component', `
         box-sizing: border-box;
         border: solid 1px gray;
     }
-
     .datepicker-component ::-webkit-datetime-edit-day-field,
     .datepicker-component ::-webkit-datetime-edit-month-field,
     .datepicker-component ::-webkit-datetime-edit-year-field,
@@ -48,7 +45,6 @@ defaultCss('datepicker-component', `
         display: none;
         font-size: 1px;
     }
-
     .datepicker-component ::-webkit-calendar-picker-indicator{
         opacity: 1;
         color: black;
@@ -65,6 +61,7 @@ defaultCss('datepicker-component', `
 
 module.exports = function(fastn, component, type, settings, children){
     settings.value = settings.value;
+
     component.extend('_generic', settings, children);
     component.setProperty('date');
 
@@ -161,14 +158,6 @@ module.exports = function(fastn, component, type, settings, children){
         }
 
         component.date.on('update', update);
-
-        component.on('render',function(){
-          let date = settings.value() &&  new Date(settings.value());
-          var noDate = !date || isNaN(date);
-
-          component.textInput.value(noDate ? '' : date.toDateString());
-          component.datePicker.value(noDate ? undefined : date);
-        })
 
         component.emit('render');
 
