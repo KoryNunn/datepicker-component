@@ -40,6 +40,7 @@ defaultCss('datepicker-component', `
     .datepicker-component ::-webkit-datetime-edit-month-field,
     .datepicker-component ::-webkit-datetime-edit-year-field,
     .datepicker-component ::-webkit-datetime-edit-text,
+    .datepicker-component ::-webkit-clear-button,
     .datepicker-component ::-webkit-inner-spin-button
      {
         color: transparent;
@@ -77,13 +78,16 @@ module.exports = function(fastn, component, type, settings, children){
             return component.element;
         }
 
+        if(key === 'value'){
+            return; // Don't auto-bind the value property.
+        }
+
         return component.textInput && component.textInput.element;
     };
 
     component.render = function(){
         component.textInput = fastn('input', {
             value: '',
-            placeholder: settings.placeholder,
             tabindex: 0,
             onchange: 'value:value'
         }).render();
@@ -157,11 +161,9 @@ module.exports = function(fastn, component, type, settings, children){
             component.datePicker.value(noDate ? undefined : date);
         }
 
-        component.date.on('change', update);
+        component.date.on('update', update);
 
         component.emit('render');
-
-        update(settings.date);
 
         return component;
     };
